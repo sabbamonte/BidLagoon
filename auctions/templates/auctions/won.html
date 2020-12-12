@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% for inactive in inactives %}
+
+    <h2>Closed Listing</h2>
+    <h4>Listing: {{inactive.title}}</h4>
+    <h6> Price: $ {{ inactive.price }}</h6>
+    <br><hr>
+
+{% endfor %}
+
+{% endblock %}

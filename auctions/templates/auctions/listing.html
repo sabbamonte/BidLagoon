@@ -1,0 +1,88 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% for listing in listings %}
+
+    <h2>{{ listing.title }}</h2>
+    <div class="listing">
+        <div class="listing-inside">
+            
+            <h5>Description </h5>{{listing.description}}
+            <hr class="hr-listing">
+            <h4> Current bid ${{ listing.price }}</h4>
+            {% for bid in highest_bid %}
+            <h6>Held by: <strong>{{bid.bidder}}</strong><h6>
+            {% endfor %}
+            <br>
+            <form action="{% url 'listing' listing.title %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input autofocus class="form-control" style="width:200px" type="number" name="bid" placeholder="Type bid here">
+                </div>
+                <input class="btn btn-primary" type="submit"> 
+            </form>
+            <hr class="hr-listing">
+            <form action="{% url 'listing' listing.title %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {% if match  %} 
+                    <button class="btn btn-primary" type="submit" name="remove" value="1">Remove from Watchlist</button> 
+                    {% else %}
+                    <button class="btn btn-primary" type="submit" name="add" value="2">Add to Watchlist</button> 
+                    {% endif %}
+                </div>
+            </form>
+            <hr class="hr-listing">
+            <br>
+            <h5>Details</h5>
+            <p>Listed by: {{listing.seller}}</p>
+            {% if listing.category %}
+            <p>Category: {{listing.category}}</p>
+            {% else %}
+            <p>Category: None listed</p>
+            {% endif %}
+        </div>
+    </div>
+    <img src="{{ listing.photo }}" id="listing-photo">
+    <h2>Comments</h2>
+    <hr>
+
+    {% for comment in comments %}
+
+    <div class="comment-box">
+        <strong>{{ comment.commenter }}</strong></p>
+        <p> {{comment.comment}} </p>
+    </div>
+    <hr id="comment-section">
+    {% endfor %}
+
+    <form action="{% url 'listing' listing.title %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <textarea autofocus class="form-control" name="comment" rows="4" columns="5" placeholder="Add comment"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Add Comment</button>
+    </form> 
+
+    <br>
+
+    <form action="{% url 'listing' listing.title %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {% if found  %} 
+            <button class="btn btn-primary" type="submit" name="close" value="1">Close the Listing</button> 
+            {% endif %}
+        </div>
+    </form>
+    
+{% endfor %}
+
+
+    
+
+    
+
+
+
+{% endblock %}

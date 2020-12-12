@@ -1,0 +1,117 @@
+body {
+    padding: 10px;
+    background-color: #fce1e0;
+    
+}
+
+.navbar {
+    position: relative;
+    margin-left: 300px;
+}
+
+.photos {
+    margin-left: 350px;
+
+}
+
+.photos-text {
+    margin-left: 366px;
+    font-family: 'Archivo', sans-serif;
+}
+
+#title {
+    background-color: brown;
+}
+
+.btn {
+    background-color: brown;
+}
+
+.btn:hover {
+    background-color: lightskyblue;
+}
+
+.hr-listing {
+    width: 300px;
+    margin-left: -5px;
+}
+
+h1, h2 , #categories, .watchlist {
+    text-align: center;
+}
+
+img {
+    width: 600px;
+}
+
+#index-image {
+    position: relative;
+    margin-left: 500px;
+    margin-top: -220px;
+    width: 350px;
+    height: 300px;
+    
+}
+
+.index-listing {
+    padding: 50px;
+    margin-left: 100px;
+    
+
+}
+
+.listing {
+    padding: 50px;
+    margin-top: -250px;
+}
+
+.listing-inside {
+    margin-top: 250px;
+    margin-left: 100px;
+}
+
+#listing-photo {
+    position: relative;
+    margin-left: 500px;
+    margin-top: -600px;
+    width: 350px;
+    height: 300px;
+}
+
+
+
+.index-listing-inside {
+    position: relative;
+    margin-top: 80px;
+    margin-left: 180px;
+}
+
+a {
+    color: black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 500;
+   }
+
+.nav-item, .nav-link {
+    color:whitesmoke
+}
+
+.nav-link:hover {
+    color:lightskyblue
+}
+
+#comment-section {
+    width: 500px;
+    margin-left: 130px;
+}
+
+.comment-box {
+    margin-left:150px;
+}
+
+
+
+

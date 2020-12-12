@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    <hr>
+    <h4 id="categories">Search by categories</h4>
+    <div class="photos">
+        <img src="https://target.scene7.com/is/image/Target/5xtdj-tvs-QUIVER-190514-1557863699364" alt="Electronics" style="width:120px; height:100px;"> 
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpOG9rH3_Z3oMsxCas3Lgc9Ctn_4NG68lDkQ&usqp=CAU" alt="Household" style="width:150px;">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS24kO1V6MLFub4ynGeSoHkjWXhawMmfYNdLA&usqp=CAU" alt="Toys" style="width:150px;">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwJlwX_YKYg54SMhIWFaAhF7J1Gryxosjlgg&usqp=CAU" alt="None" style="width:150px;">
+    </div>
+    <div class="photos-text">
+        <a href="category/Electronics" id="photos">Electronics</a>
+        &emsp; &emsp; &emsp;
+        <a href="category/Household" id="photos">Household</a>
+        &emsp; &emsp; &emsp; &emsp;
+        <a href="category/Toys" id="photos">Toys</a>
+        &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
+        <a href="category/None" id="photos">None</a>
+    </div>
+    <hr>
+{% for listing in listings %}
+
+    
+    <div class="index-listing">
+        <div class="index-listing-inside">
+            <h4><a href="{% url 'listing' listing.title %}">{{listing.title}}</a></h4>
+            <h6> Price: <strong style="font-size:20px;">${{ listing.price }}</strong></h6>
+            <i style="font-size:24px" class="fa">&#xf1f3;</i>
+            <i style="font-size:24px" class="fa">&#xf1f0;</i>
+            <i style="font-size:24px" class="fa">&#xf1f4;</i>
+            <i style="font-size:24px" class="fa">&#xf1f1;</i>
+        </div>
+        <img src="{{ listing.photo }}" id="index-image">
+        <br><hr>
+    </div>
+
+{% endfor %}
+
+{% for inactive in inactives %}
+
+<h2>Closed Listing</h2>
+<h4>Listing: <a href="{% url 'closed' inactive.title %}">{{inactive.title}}</a></h4>
+    <h6> Price: $ {{ inactive.price }}</h6>
+    <br><hr>
+
+{% endfor %}
+
+{% endblock %}

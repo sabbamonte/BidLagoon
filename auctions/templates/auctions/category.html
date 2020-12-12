@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Listings in Category</h2>
+    <hr>
+
+{% for listing in listings%}
+    <div class="index-listing">
+        <div class="index-listing-inside">
+            <h4><a href="{% url 'listing' listing.title %}">{{listing.title}}</a></h4>
+            <h6> Price: <strong style="font-size:20px;">${{ listing.price }}</strong></h6>
+            <p> {{listing.description}} <p>
+            <i style="font-size:24px" class="fa">&#xf1f3;</i>
+            <i style="font-size:24px" class="fa">&#xf1f0;</i>
+            <i style="font-size:24px" class="fa">&#xf1f4;</i>
+            <i style="font-size:24px" class="fa">&#xf1f1;</i>
+        </div>
+        <img src="{{ listing.photo }}" id="index-image">
+        <br><hr>
+    </div>
+{% empty %}
+    <h4 class="watchlist">No listings in this category yet</h4>
+{% endfor %}
+
+
+
+
+
+{% endblock %}
