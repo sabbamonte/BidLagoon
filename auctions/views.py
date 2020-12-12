@@ -14,16 +14,19 @@ import requests
 
 
 def index(request):
+    # Define user and render message if not logged in
     user = User.objects.filter(username=request.user)
     if not user:
         message = "You have to log in/register to see listings"
         return render(request, "auctions/apology.html", {'message':message})
 
+    # return all listings
     listings = auction_listings.objects.all()
     return render(request, "auctions/index.html", {'listings':listings})
 
 @login_required()
 def won(request):
+    # Iterate through ianctives and find which ones the user won
     inactives = inactive.objects.filter(winner=request.user)
     return render(request, "auctions/won.html", {'inactives':inactives})
 
@@ -48,6 +51,7 @@ def login_view(request):
 
 
 def logout_view(request):
+    # Log user out
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
@@ -83,6 +87,7 @@ def new(request):
     if request.method == "GET":
         return render(request,"auctions/new.html")
     else:
+        # create a new listing and save it
         listing = auction_listings()
 
         listing.seller = request.user
@@ -113,10 +118,13 @@ def new(request):
 
 @login_required()
 def listing(request, title):
+    # return listing
     if request.method == "GET":
         listing = auction_listings.objects.filter(title=title)
         
         watchlist = watchlists.objects.filter(user=request.user)
+
+        # get the highest bid
         all_bids = bids.objects.all()
         highest_bid = []
         for lists in listing:
@@ -126,8 +134,10 @@ def listing(request, title):
                 if lists.price == bid.bid:
                     highest_bid.append(bid)
         
+        # get all comments for this listing
         comments = comment.objects.filter(title=title)
 
+        # check if listing is in user's watchlist
         titles = []
         match = []
         titles[:]
@@ -137,6 +147,7 @@ def listing(request, title):
                 if tit in listing:
                     match = tit
 
+        # toggle watchlist button
         listings = auction_listings.objects.get(title=title)
         user = request.user
         if user == listings.seller:
@@ -145,7 +156,8 @@ def listing(request, title):
             found = None
         
         return render(request,"auctions/listing.html", {"listings":listing, "match":match, "comments":comments, "found":found, "highest_bid":highest_bid})
-                
+
+    # add listing to watchlist      
     if request.method == "POST" and 'add' in request.POST:
         listing = auction_listings.objects.get(title=title)
     
@@ -156,6 +168,7 @@ def listing(request, title):
 
         return HttpResponseRedirect(reverse("watchlist"))
     
+    # remove listing from watchlist
     if request.method == "POST" and 'remove' in request.POST:
         listing = auction_listings.objects.get(title=title)
         watchlist = watchlists.objects.get(title=listing, user=request.user)
@@ -163,6 +176,7 @@ def listing(request, title):
         
         return HttpResponseRedirect(reverse("watchlist"))
     
+    # bid on the listing and check if user is bidding on own listing
     if request.method == "POST" and 'bid' in request.POST:
         listing = auction_listings.objects.get(title=title)
         if listing.seller == request.user:
@@ -172,6 +186,7 @@ def listing(request, title):
         if not new_bid:
             return render(request, "auctions/apology.html", {'message':'Enter a valid bid'})
 
+        # check if bid is lower than current price
         price = listing.price
         amount = []
         for bid in bidds:
@@ -197,6 +212,7 @@ def listing(request, title):
         listings = auction_listings.objects.all()
         return render(request,"auctions/index.html", {"listings":listings})
 
+    # close the listing and declare winner, if applicable
     if request.method == "POST" and 'close' in request.POST:
         listing = auction_listings.objects.get(title=title)
         all_bids = bids.objects.filter(title=listing)
@@ -225,6 +241,7 @@ def listing(request, title):
         inactive_listing = inactive.objects.filter(title=title)
         return render(request,"auctions/closed.html", {"listings":inactive_listing, "winner":w, "you":you})
 
+    # add a comment to listing
     if request.method == "POST" and 'comment' in request.POST:
         add_comment = request.POST['comment']
         listing = auction_listings.objects.get(title=title)
@@ -239,6 +256,7 @@ def listing(request, title):
 
 @login_required()
 def closed(request,title):
+    # show the winner for the auction when closed
     if request.method == "GET":
         inactives = inactive.objects.filter(winner=request.user)
         you = "You are the winner!"
@@ -246,6 +264,7 @@ def closed(request,title):
 
 @login_required()
 def watchlist(request):
+    # return watchlist for specific user
     if request.method == "GET":
         listing = watchlists.objects.filter(user=request.user)
         titles=[]
@@ -255,6 +274,7 @@ def watchlist(request):
 
 @login_required()
 def category(request,title):
+    # show all categories
     if request.method == "GET":
         listings = auction_listings.objects.filter(category=title)
         print(listings)
