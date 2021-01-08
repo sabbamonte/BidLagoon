@@ -6,16 +6,16 @@ body {
 
 .navbar {
     position: relative;
-    margin-left: 300px;
+    margin-left: 380px;
 }
 
 .photos {
-    margin-left: 350px;
+    margin-left: 420px;
 
 }
 
 .photos-text {
-    margin-left: 366px;
+    margin-left: 440px;
     font-family: 'Archivo', sans-serif;
 }
 
@@ -56,8 +56,6 @@ img {
 .index-listing {
     padding: 50px;
     margin-left: 100px;
-    
-
 }
 
 .listing {
@@ -72,13 +70,11 @@ img {
 
 #listing-photo {
     position: relative;
-    margin-left: 500px;
+    margin-left: 550px;
     margin-top: -600px;
     width: 350px;
     height: 300px;
 }
-
-
 
 .index-listing-inside {
     position: relative;
