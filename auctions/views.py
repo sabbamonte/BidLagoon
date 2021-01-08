@@ -6,11 +6,8 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User, auction_listings, watchlists, bids, inactive, comment
-import tkinter
 import base64
-from PIL import Image, ImageTk
 from io import StringIO, BytesIO
-import requests
 
 
 def index(request):
